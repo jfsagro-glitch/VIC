@@ -1,0 +1,27 @@
+name: Verify Action Versions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Verify all actions use v4
+        run: |
+          echo "Checking all workflow files..."
+          if grep -r "@v3" .github/workflows/; then
+            echo "❌ Found v3 actions!"
+            exit 1
+          else
+            echo "✅ All actions use v4 or later"
+          fi
+      
+      - name: List all action versions
+        run: |
+          echo "Action versions in use:"
+          grep -h "uses:" .github/workflows/*.yml | sort | uniq
+
