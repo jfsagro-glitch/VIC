@@ -46,13 +46,23 @@ jobs:
     - name: Setup Pages
       uses: actions/configure-pages@v4
     
-    - name: List build contents
+    - name: Verify build output
       working-directory: ./client
       run: |
-        echo "Build directory contents:"
-        ls -la build/ || echo "Build directory not found"
-        echo "Checking for index.html:"
-        ls -la build/index.html || echo "index.html not found"
+        echo "=== Build directory contents ==="
+        ls -la build/ || (echo "ERROR: Build directory not found!" && exit 1)
+        echo ""
+        echo "=== Checking for index.html ==="
+        if [ ! -f build/index.html ]; then
+          echo "ERROR: index.html not found in build directory!"
+          exit 1
+        fi
+        echo "✅ index.html found"
+        echo ""
+        echo "=== Checking index.html content ==="
+        head -20 build/index.html
+        echo ""
+        echo "=== Build verification complete ==="
     
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
