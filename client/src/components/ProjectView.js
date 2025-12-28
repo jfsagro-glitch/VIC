@@ -114,14 +114,30 @@ function ProjectView() {
       </Box>
 
       <Paper elevation={3} sx={{ p: 4, mb: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          Финальное видео
-        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h6" gutterBottom sx={{ mb: 0 }}>
+            Финальное видео
+          </Typography>
+          {project.finalVideoUrl && (
+            <Button
+              variant="contained"
+              startIcon={<DownloadIcon />}
+              sx={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)',
+                },
+              }}
+            >
+              Скачать
+            </Button>
+          )}
+        </Box>
         {project.finalVideoUrl ? (
           <Box sx={{ mt: 2 }}>
             <video
               controls
-              style={{ width: '100%', maxHeight: '600px' }}
+              style={{ width: '100%', maxHeight: '600px', borderRadius: '8px' }}
               src={project.finalVideoUrl}
             />
           </Box>
@@ -129,6 +145,14 @@ function ProjectView() {
           <Alert severity="info">Видео еще генерируется...</Alert>
         )}
       </Paper>
+
+      {/* Timeline Editor */}
+      {project.script && (
+        <TimelineEditor project={project} onUpdate={(updatedScene) => {
+          // Обновление сцены через API
+          console.log('Updating scene:', updatedScene);
+        }} />
+      )}
 
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h6" gutterBottom>
