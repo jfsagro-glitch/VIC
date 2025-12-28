@@ -1,9 +1,18 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
-  (process.env.NODE_ENV === 'production' 
-    ? 'https://your-backend-url.vercel.app/api' 
-    : 'http://localhost:5000/api');
+// Для GitHub Pages используем относительный путь или полный URL backend
+const getApiUrl = () => {
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  // В продакшене на GitHub Pages нужен полный URL backend
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://your-backend-url.vercel.app/api';
+  }
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,

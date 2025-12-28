@@ -1,6 +1,17 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
+// Для GitHub Pages используем полный URL или относительный
+const getSocketUrl = () => {
+  if (process.env.REACT_APP_SOCKET_URL) {
+    return process.env.REACT_APP_SOCKET_URL;
+  }
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://your-backend-url.vercel.app';
+  }
+  return 'http://localhost:5000';
+};
+
+const SOCKET_URL = getSocketUrl();
 
 class SocketService {
   constructor() {
