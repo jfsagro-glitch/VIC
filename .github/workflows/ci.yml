@@ -41,4 +41,6 @@ jobs:
         CI: false
         GENERATE_SOURCEMAP: false
       continue-on-error: false
-        GENERATE_SOURCEMAP: false
+    
+    - name: Build successful
+      run: echo "✅ Build completed successfully"
