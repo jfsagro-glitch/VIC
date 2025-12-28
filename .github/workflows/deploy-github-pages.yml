@@ -86,6 +86,22 @@ jobs:
         echo ""
         echo "=== Build verification complete ==="
     
+    - name: Final verification before upload
+      working-directory: ./client
+      run: |
+        echo "=== Final verification ==="
+        echo "Build directory exists: $([ -d build ] && echo 'YES' || echo 'NO')"
+        echo "index.html exists: $([ -f build/index.html ] && echo 'YES' || echo 'NO')"
+        echo ".nojekyll exists: $([ -f build/.nojekyll ] && echo 'YES' || echo 'NO')"
+        echo ""
+        echo "=== File count in build ==="
+        find build -type f | wc -l || echo "0"
+        echo ""
+        echo "=== Top level files ==="
+        ls -1 build/ | head -10
+        echo ""
+        echo "✅ Ready to upload"
+    
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
