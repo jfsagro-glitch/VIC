@@ -46,6 +46,12 @@ jobs:
     - name: Setup Pages
       uses: actions/configure-pages@v4
     
+    - name: Create .nojekyll file
+      working-directory: ./client/build
+      run: |
+        touch .nojekyll
+        echo "✅ Created .nojekyll file"
+    
     - name: Verify build output
       working-directory: ./client
       run: |
@@ -58,6 +64,13 @@ jobs:
           exit 1
         fi
         echo "✅ index.html found"
+        echo ""
+        echo "=== Checking for .nojekyll ==="
+        if [ ! -f build/.nojekyll ]; then
+          echo "WARNING: .nojekyll not found!"
+        else
+          echo "✅ .nojekyll found"
+        fi
         echo ""
         echo "=== Checking index.html content ==="
         head -20 build/index.html
