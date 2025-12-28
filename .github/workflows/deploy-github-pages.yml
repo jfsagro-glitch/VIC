@@ -46,6 +46,14 @@ jobs:
     - name: Setup Pages
       uses: actions/configure-pages@v4
     
+    - name: List build contents
+      working-directory: ./client
+      run: |
+        echo "Build directory contents:"
+        ls -la build/ || echo "Build directory not found"
+        echo "Checking for index.html:"
+        ls -la build/index.html || echo "index.html not found"
+    
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
