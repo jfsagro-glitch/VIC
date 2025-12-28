@@ -57,7 +57,11 @@ jobs:
       working-directory: ./client
       run: |
         echo "=== Build directory contents ==="
-        ls -la build/ || (echo "ERROR: Build directory not found!" && exit 1)
+        if [ ! -d build ]; then
+          echo "ERROR: Build directory not found!"
+          exit 1
+        fi
+        ls -la build/ || exit 1
         echo ""
         echo "=== Checking for index.html ==="
         if [ ! -f build/index.html ]; then
@@ -68,13 +72,17 @@ jobs:
         echo ""
         echo "=== Checking for .nojekyll ==="
         if [ ! -f build/.nojekyll ]; then
-          echo "WARNING: .nojekyll not found!"
-        else
+          echo "WARNING: .nojekyll not found, creating it..."
+          touch build/.nojekyll || echo "" > build/.nojekyll
+        fi
+        if [ -f build/.nojekyll ]; then
           echo "✅ .nojekyll found"
+        else
+          echo "WARNING: Could not create .nojekyll, but continuing..."
         fi
         echo ""
         echo "=== Checking index.html content ==="
-        head -20 build/index.html
+        head -5 build/index.html || echo "Could not read index.html"
         echo ""
         echo "=== Build verification complete ==="
     
