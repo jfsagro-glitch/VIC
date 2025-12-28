@@ -7,6 +7,12 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+# Разрешаем запись в репозиторий для GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -32,9 +38,19 @@ jobs:
       env:
         REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL || 'http://localhost:5000/api' }}
     
-    - name: Deploy to Vercel
-      uses: amondnet/vercel-action@v25
+    # Деплой на GitHub Pages (работает без дополнительных настроек)
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./client/build
+        cname: ${{ secrets.CUSTOM_DOMAIN || '' }}
+    
+    # Опционально: Деплой на Vercel (если настроены секреты)
+    - name: Deploy to Vercel
+      if: github.ref == 'refs/heads/main' && secrets.VERCEL_TOKEN != ''
+      uses: amondnet/vercel-action@v25
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
