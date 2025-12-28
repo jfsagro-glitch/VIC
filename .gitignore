@@ -1,0 +1,28 @@
+node_modules/
+.env
+uploads/
+.DS_Store
+*.log
+dist/
+build/
+.vscode/
+.idea/
+
+# Client build
+client/build/
+client/node_modules/
+
+# Server
+server/node_modules/
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+*.swp
+*.swo
+*~
+
