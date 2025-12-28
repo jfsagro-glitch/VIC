@@ -54,7 +54,7 @@ function Layout({ children }) {
                   },
                 }}
               >
-                Создать
+                Создать ИИ видео
               </Button>
               <Button
                 color="inherit"

@@ -20,7 +20,9 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DownloadIcon from '@mui/icons-material/Download';
 import { projectsAPI } from '../services/api';
+import TimelineEditor from './TimelineEditor';
 
 function ProjectView() {
   const { id } = useParams();

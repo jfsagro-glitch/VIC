@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VideoCreator from './components/VideoCreator';
+import AIVideoGenerator from './components/AIVideoGenerator';
 import ProjectView from './components/ProjectView';
 import ProjectsList from './components/ProjectsList';
 import Layout from './components/Layout';
@@ -81,11 +82,12 @@ function App() {
       <CssBaseline />
       <Router>
         <Layout>
-          <Routes>
-            <Route path="/" element={<VideoCreator />} />
-            <Route path="/projects" element={<ProjectsList />} />
-            <Route path="/projects/:id" element={<ProjectView />} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<AIVideoGenerator />} />
+          <Route path="/create" element={<VideoCreator />} />
+          <Route path="/projects" element={<ProjectsList />} />
+          <Route path="/projects/:id" element={<ProjectView />} />
+        </Routes>
         </Layout>
       </Router>
     </ThemeProvider>
