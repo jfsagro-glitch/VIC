@@ -47,10 +47,11 @@ jobs:
       uses: actions/configure-pages@v4
     
     - name: Create .nojekyll file
-      working-directory: ./client/build
+      working-directory: ./client
       run: |
-        touch .nojekyll
+        touch build/.nojekyll || echo "" > build/.nojekyll
         echo "✅ Created .nojekyll file"
+        ls -la build/.nojekyll || echo "Warning: .nojekyll file not found after creation"
     
     - name: Verify build output
       working-directory: ./client
