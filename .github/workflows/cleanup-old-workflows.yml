@@ -1,0 +1,25 @@
+name: Cleanup and Verify
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Verify all actions use v4+
+        run: |
+          echo "Checking all workflow files for outdated versions..."
+          if grep -r "upload-artifact@v3\|@v3" .github/workflows/ 2>/dev/null; then
+            echo "❌ Found v3 actions!"
+            exit 1
+          else
+            echo "✅ All actions use v4 or later"
+            echo ""
+            echo "Current action versions:"
+            grep -h "uses:" .github/workflows/*.yml | grep -E "@v[0-9]" | sort | uniq
+          fi
+
