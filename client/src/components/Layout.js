@@ -27,7 +27,10 @@ function Layout({ children }) {
       >
         <Container maxWidth="lg">
           <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
+            <Box 
+              sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }} 
+              onClick={() => navigate('/')}
+            >
               <VideoLibraryIcon sx={{ fontSize: 32 }} />
               <Typography
                 variant="h5"

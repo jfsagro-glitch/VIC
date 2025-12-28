@@ -80,7 +80,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
+      <Router basename={process.env.PUBLIC_URL || '/VIC'}>
         <Layout>
         <Routes>
           <Route path="/" element={<AIVideoGenerator />} />
