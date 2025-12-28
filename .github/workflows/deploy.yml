@@ -1,17 +1,10 @@
-name: Deploy Frontend
+name: Deploy Frontend (Alternative)
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
-# Разрешаем запись в репозиторий для GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# Этот workflow используется как альтернативный вариант деплоя
+# Основной деплой происходит через deploy-github-pages.yml
 
 jobs:
   deploy-frontend:
@@ -37,25 +30,6 @@ jobs:
       run: npm run build
       env:
         REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL || 'http://localhost:5000/api' }}
-    
-    # Деплой на GitHub Pages (работает без дополнительных настроек)
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./client/build
-        cname: ${{ secrets.CUSTOM_DOMAIN || '' }}
-    
-    # Опционально: Деплой на Vercel (если настроены секреты)
-    - name: Deploy to Vercel
-      if: github.ref == 'refs/heads/main' && secrets.VERCEL_TOKEN != ''
-      uses: amondnet/vercel-action@v25
-      with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-        working-directory: ./client
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
